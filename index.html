@@ -1,0 +1,686 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Miami - Dade</title>
+        <link rel="stylesheet" href="src/leaflet.css">
+        <link rel="stylesheet" href="src/fonts/leaflet.css">
+        <link rel="stylesheet" href="src/css/bootstrap.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.MousePosition.css">
+        <link rel="stylesheet" href="src/plugins/L.Control.Sidebar.css">
+        <link rel="stylesheet" href="src/plugins/Leaflet.PolylineMeasure.css">
+        <link rel="stylesheet" href="src/plugins/easy-button.css">
+        <link rel="stylesheet" href="src/plugins/leaflet-styleeditor/css/Leaflet.StyleEditor.css">
+        <link rel="stylesheet" href="src/css/font-awesome.min.css">
+        <link rel="stylesheet" href="src/plugins/leaflet.awesome-markers.css">
+        <link rel="stylesheet" href="src/plugins/leaflet-mapkey/MapkeyIcons.css">
+        <link rel="stylesheet" href="src/plugins/leaflet-mapkey/L.Icon.Mapkey.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.css">
+        <link rel="stylesheet" href="src/plugins/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="src/jquery-ui.min.css">
+        <link rel="stylesheet" href="src/dist/searchbox.min.css" />
+
+        <script src="src/leaflet-src.js"></script>
+        <script src="src/jquery-3.2.0.min.js"></script>
+        <script src="src/plugins/L.Control.MousePosition.js"></script>
+        <script src="src/plugins/L.Control.Sidebar.js"></script>
+        <script src="src/plugins/Leaflet.PolylineMeasure.js"></script>
+        <script src="src/plugins/easy-button.js"></script>
+        <script src="src/plugins/leaflet-providers.js"></script>
+        <script src="src/plugins/leaflet-styleeditor/javascript/Leaflet.StyleEditor.js"></script>
+        <script src="src/plugins/leaflet-styleeditor/javascript/Leaflet.StyleForms.js"></script>
+        <script src="src/plugins/leaflet.ajax.min.js"></script>
+        <script src="src/plugins/leaflet.sprite.js"></script>
+        <script src="src/plugins/leaflet.awesome-markers.min.js"></script>
+        <script src="src/plugins/leaflet-mapkey/L.Icon.Mapkey.js"></script>
+        <script src="src/plugins/leaflet.markercluster.js"></script>
+        <script src="src/jquery-ui.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnEl2RxBw5w0u4WZsuxuPXe0BryUtPQrk" async defer></script>
+        <script src="https://unpkg.com/leaflet.gridlayer.googlemutant@latest/dist/Leaflet.GoogleMutant.js"></script>
+        <script src="src/dist/leaflet.customsearchbox.min.js"></script>
+
+<!--    ***************  Begin Leaflet.Draw-->
+
+        <script src="src/plugins/leaflet-draw/Leaflet.draw.js"></script>
+        <script src="src/plugins/leaflet-draw/Leaflet.Draw.Event.js"></script>
+        <link rel="stylesheet" href="src/plugins/leaflet-draw/leaflet.draw.css"/>
+
+        <script src="src/plugins/leaflet-draw/Toolbar.js"></script>
+        <script src="src/plugins/leaflet-draw/Tooltip.js"></script>
+
+        <script src="src/plugins/leaflet-draw/ext/GeometryUtil.js"></script>
+        <script src="src/plugins/leaflet-draw/ext/LatLngUtil.js"></script>
+        <script src="src/plugins/leaflet-draw/ext/LineUtil.Intersect.js"></script>
+        <script src="src/plugins/leaflet-draw/ext/Polygon.Intersect.js"></script>
+        <script src="src/plugins/leaflet-draw/ext/Polyline.Intersect.js"></script>
+        <script src="src/plugins/leaflet-draw/ext/TouchEvents.js"></script>
+
+        <script src="src/plugins/leaflet-draw/draw/DrawToolbar.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Feature.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.SimpleShape.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Polyline.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Circle.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Marker.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Polygon.js"></script>
+        <script src="src/plugins/leaflet-draw/draw/handler/Draw.Rectangle.js"></script>
+
+
+        <script src="src/plugins/leaflet-draw/edit/EditToolbar.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/EditToolbar.Edit.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/EditToolbar.Delete.js"></script>
+
+        <script src="src/plugins/leaflet-draw/Control.Draw.js"></script>
+
+        <script src="src/plugins/leaflet-draw/edit/handler/Edit.Poly.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/Edit.SimpleShape.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/Edit.Circle.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/Edit.Rectangle.js"></script>
+        <script src="src/plugins/leaflet-draw/edit/handler/Edit.Marker.js"></script>
+
+<!--    **************  End of Lealet Draw-->
+
+        <style>
+            #mapdiv {
+                height:100vh;
+            }
+
+            .col-xs-12, .col-xs-6, .col-xs-4 {
+                padding:3px;
+            }
+
+            #divProject {
+                background-color: beige;
+            }
+
+            #divBUOWL {
+                background-color: #ffffb3;
+            }
+
+            #divEagle {
+                background-color: #ccffb3;
+            }
+
+            #divRaptor {
+                background-color: #e6ffff;
+            }
+
+            .errorMsg {
+                padding:0;
+                text-align:center;
+                background-color:#ececec;
+            }
+            /* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: deepskyblue;
+  padding: 10px 10px;
+            }
+
+.real {
+    background-color:#f0ff63;
+    padding: 10px;
+    /*position: relative;*/
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 2px;
+}
+
+tr:nth-child(even) {
+    background-color: #f6ffa3;
+    
+}
+
+/* Style the header links */
+.header title {
+  float: right;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+/* Styling the search pane */
+.srchbtn{
+    margin: 20px 2px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .header-right {
+    float: none;
+  }
+}
+
+</style>
+    </head>
+    <body>
+        <div id="side-bar" class="col-md-2">
+
+            <div id="divPlot" class="col-xs-12">
+                <div id="divPlotLabel" class=" col-xs-12">
+                    <!--<h4 id="lblPlot">Land Parcel Search</h4>-->
+                </div>
+
+                <div id="divPlotError" class="errorMsg col-xs-12"></div>
+
+                <!-- <div id="divFindPlot" class="form-group has-error">
+                    <div class="col-xs-8">
+                        <input type="text" id="txtFindPlot" class="form-control srchbtn"  placeholder="Parcel ID">
+                    </div>
+
+                    <div class="col-xs-4">
+                        <button id="btnFindPlot" class="btn btn-primary btn-block srchbtn" ><i class="fa fa-search" aria-hidden="true"></i></button>
+                    </div>
+                </div> -->
+                 <table>
+                     <tr id="grrr"> </tr>
+                 </table>
+
+                <div class="" id="divPlotData"></div>
+            </div>
+
+            <div id="divPlotFilter" class="col-xs-12"> 
+            </div>
+        </div>
+
+        
+
+
+        <div id="mapdiv" class="col-md-12"></div>
+        <script>
+            var mymap;
+            var lyrOSM;
+            var lyrWatercolor;
+            var lyrTopo;
+            var lyrImagery;
+            var lyrOutdoors;
+            var lyrEagleNests;
+            var lyrRaptorNests;
+            var lyrClientLines;
+            var lyrBUOWL;
+            var lyrGBH;
+            var lyrGith;
+            var lyrBuildings;
+            var lyrLandUse;
+            var lyrSearch;
+            var lyrMarkerCluster;
+            var mrkCurrentLocation;
+            var fgpDrawnItems;
+            var ctlAttribute;
+            var ctlScale;
+            var ctlMouseposition;
+            var ctlMeasure;
+            var ctlEasybutton;
+            var ctlSidebar;
+            var ctlRsidebar
+            var ctlLayers;
+            var ctlDraw;
+            var ctlStyle;
+            var objBasemaps;
+            var objOverlays;
+            var arLayersIDs  = [];
+            var arProjectIDs = [];
+            var arHabitatIDs = [];
+            var arEagleIDs   = [];
+            var arRaptorIDs  = [];
+
+            $(document).ready(function(){
+
+                //  ********* Map Initialization ****************
+
+                mymap = L.map('mapdiv', 
+                    {center: [25.8435, -80.18131],
+                    zoom:17,
+                    minZoom:15, 
+                    attributionControl:true});
+
+                 ctlAttribute = L.control.attribution().addTo(mymap);
+                ctlAttribute.addAttribution('OSM');
+                ctlAttribute.addAttribution('&copy; <a href="http://altochange.com">AltoChange Consulting</a>');
+
+                mymap.zoomControl.setPosition('bottomright');
+
+                ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
+
+                ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
+                   ctlSidebar.toggle();
+                }).setPosition('topright').addTo(mymap);
+
+               
+
+                ctlScale = L.control.scale({position:'bottomleft', metric:false, maxWidth:200}).addTo(mymap);
+
+                ctlMouseposition = L.control.mousePosition().addTo(mymap);
+
+               
+                ctlMeasure = L.control.polylineMeasure({position:'bottomright'}).addTo(mymap);
+
+                
+                $(document).ready(function () {
+        
+        // var map = L.map('map').setView([51.505, -0.09], 5);
+        // map.zoomControl.setPosition('topright');
+        // map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        //     {attribution:'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'}
+        //     ));
+        
+        var searchboxControl=createSearchboxControl();
+        var control = new searchboxControl({
+            sidebarTitleText: 'Header',
+            // sidebarMenuItems: {
+            //     Items: [
+            //         { type: "link", name: "Link 1 (github.com)", href: "http://github.com", icon: "icon-local-carwash" },
+            //         { type: "link", name: "Link 2 (google.com)", href: "http://google.com", icon: "icon-cloudy" },
+            //         { type: "button", name: "Button 1", onclick: "alert('button 1 clicked !')", icon: "icon-potrait" },
+            //         { type: "button", name: "Button 2", onclick: "button2_click();", icon: "icon-local-dining" },
+            //         { type: "link", name: "Link 3 (stackoverflow.com)", href: 'http://stackoverflow.com', icon: "icon-bike" },
+            //     ]
+            // }
+        });
+
+        control._searchfunctionCallBack = function (searchkeywords)
+        {   
+            ctlSidebar.show();
+             function returnPlotByID(id){
+                    var arLayers = lyrLandUse.getLayers();
+                    for(i=0; i<arLayers.length-1;i++){
+                        var featureID = arLayers[i].feature.properties.OBJECTID;
+                        if(featureID == id){
+                            return arLayers[i];
+                            }
+                        }
+                    return false;
+                }
+
+                //*** find plot query ***//
+
+                $("#searchbox-searchbutton").click(function(){
+                    var id = $("#searchboxinput").val();
+                    var lyr = returnPlotByID (id);
+                    if (lyr){
+                        if(lyrSearch){
+                            lyrSearch.remove();
+                        }
+                        lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+
+                        mymap.fitBounds(lyr.getBounds().pad(1));
+                        var att = lyr.feature.properties;
+                        $("#divPlotData").html("<h4>Parcel Information </h4><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+                    }else{
+                        $("#divPlotError").html("***Plot Not Found ***");
+                    }
+                });
+            
+        }
+        mymap.addControl(control);
+    });
+    
+    
+
+                //   *********** Layer Initialization **********
+
+                lyrOSM = L.tileLayer.provider('OpenStreetMap.Mapnik');
+                lyrTopo = L.tileLayer.provider('OpenTopoMap');
+                lyrImagery = L.tileLayer.provider('Esri.WorldImagery');
+                lyrOutdoors = L.tileLayer.provider('Thunderforest.Outdoors');
+                lyrWatercolor = L.tileLayer.provider('Stamen.Watercolor');
+                mymap.addLayer(lyrOSM);
+
+                fgpDrawnItems = new L.FeatureGroup();
+                fgpDrawnItems.addTo(mymap);
+
+                lyrValidation = L.geoJSON.ajax('data/maimahiulanduse.geojson',{style: styleVerified}).addTo(mymap);
+
+                lyrCountyBoundary = L.geoJSON.ajax('data/countyboundary.geojson',{style:{color:'black', dashArray:"5,5"}} ).addTo(mymap);
+
+                lyrBuildings = L.geoJSON.ajax('data/maimahiubuildings.geojson',{style:{ weight:1, opacity:0.1, fillOpacity:0.2}}).addTo(mymap);
+
+
+                lyrInfastructure = L.geoJSON.ajax('data/maimahiuinfrastructure.geojson',{style:{color:'grey', weight:1, opacity:0.5, fillOpacity:0.2}} ).addTo(mymap);
+
+                lyrRiver = L.geoJSON.ajax('data/maimahiuriver.geojson').bindTooltip("County Boundary").addTo(mymap);
+
+                lyrLandUse = L.geoJSON.ajax('data/miami/miamiplots.geojson', {
+                    color: '#f01154',
+                    opacity: 1,
+                    weight:0.8,
+                    style: styleLanduse, 
+                    onEachFeature: processLanduse, 
+                    //filter: fliterPlots
+                }).addTo(mymap);
+
+                lyrLandUse.on('data:loaded', function(){
+                    arLayersIDs.sort(function(a,b){return a-b});
+                    $("#txtFindPlot").autocomplete({
+                        source:arLayersIDs
+                    });
+                });
+            //<!------- setup layer control ----------->//
+
+                objBasemaps = {
+                    "Open Street Maps": lyrOSM,
+                    "Topo Map":lyrTopo,
+                    "Imagery":lyrImagery
+
+                };
+
+                objOverlays = {
+
+                    "Land Parcel":lyrLandUse,
+                    
+
+                };
+
+                ctlLayers = L.control.layers(objBasemaps, objOverlays).addTo(mymap);
+
+                // **********  Setup Draw Control ****************
+
+                ctlDraw = new L.Control.Draw({
+                    position:'bottomright',
+                    draw:{
+                        circle:false,
+                        rectangle:false,
+                    },
+                    edit:{
+                        featureGroup:fgpDrawnItems
+                    }
+                });
+                ctlDraw.addTo(mymap);
+
+                mymap.on('draw:created', function(e){
+                    fgpDrawnItems.addLayer(e.layer);
+                });
+
+                // ************ Location Events **************
+
+                mymap.on('locationfound', function(e) {
+                    console.log(e);
+                    if (mrkCurrentLocation) {
+                        mrkCurrentLocation.remove();
+                    }
+                    mrkCurrentLocation = L.circle(e.latlng, {radius:e.accuracy/2}).addTo(mymap);
+                    mymap.setView(e.latlng, 14);
+                });
+
+                mymap.on('locationerror', function(e) {
+                    console.log(e);
+                    alert("Location was not found");
+                })
+
+            });
+
+            //********** STYLING MAI MAHIU POLYGONS **********//
+
+            function styleDocs(json){
+                var att = json.properties;
+                switch(att.status){
+                    case 'Documented':
+                        return {color: 'orange', fillColor:'orange'};
+                        break;
+
+                    case 'Not Documented':
+                        return {color: 'black'};
+                        break;
+                }
+            }
+
+                function filterPlots(json){
+                    var att = json.properties;
+                    var optFilter = $("input[name=fltPlots]:checked").val();
+                    if(optFilter=='ALL'){
+                        return true;
+                    }else{
+                        return (att.status==optFilter);
+                    }
+                }
+
+                function button2_click(id)
+                {
+                   var arLayers = lyrLandUse.getLayers();
+                    for(i=0; i<arLayers.length-1;i++){
+                        var featureID = arLayers[i].feature.properties.OBJECTID;
+                        if(featureID == id){
+                            return arLayers[i];
+                            }
+                        }
+                    return false; 
+                }
+
+                //**** search plot *****//
+
+                function returnPlotByID(id){
+                    var arLayers = lyrLandUse.getLayers();
+                    for(i=0; i<arLayers.length-1;i++){
+                        var featureID = arLayers[i].feature.properties.OBJECTID;
+                        if(featureID == id){
+                            return arLayers[i];
+                            }
+                        }
+                    return false;
+                }
+
+                //*** find plot query ***//
+
+                $("#searchbox-searchbutton").click(function(){
+                    var id = $("#searchboxinput").val();
+                    var lyr = returnPlotByID (id);
+                    if (lyr){
+                        if(lyrSearch){
+                            lyrSearch.remove();
+                        }
+                        lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+
+                        mymap.fitBounds(lyr.getBounds().pad(1));
+                        var att = lyr.feature.properties;
+                        $("#divPlotData").html("<h4>Parcel Information </h4><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+                    }else{
+                        $("#divPlotError").html("***Plot Not Found ***");
+                    }
+                });
+
+
+            function processGith (json, lyr){
+            var att = json.properties;
+                lyr.bindTooltip("<h4>Plot ID: "+att.Plot_Numbe+"</h4>Status:"+att.Status+"<br> Land Use: "+att.LandUse+"<br> Plot Size in HA: "+att.AREA1 );
+                arLayersIDs.push(att.PLOT_NUMBE.toString());
+            }
+
+           //      function testPlotTxtID(id){
+           //          if (arLayersIDs.indexOf(id)<0){
+           //          $("#divFindPlot").addClass("has-error");
+           //              $("#divPlotError").html("*** PLOT NOT FOUND");
+           //              $("#btnFindPlot").attr("disabled", true);
+           //              }else{
+           //              $("#divFindPlot").removeClass("has-error");
+           //              $("#divPlotError").html("");
+           //              $("#btnFindPlot").attr("disabled", false);
+           //          }
+           // }
+
+                $("#txtFindPlot").on('keyup paste', function(){
+                    var id = $("#txtFindPlot").val();
+                    testPlotTxtID(id);
+                });
+
+
+                function styleLanduse(json){
+                var att = json.properties;
+                switch(att.DESCR){
+
+                    case '"Sales and Services (Wholesale facilities, Spot commercial, strip commercial, neighborhood shopping centers\/plazas). Excludes office facilities."':
+                        return {color:'#ffffa6' , fillColor:'#ffffa6'};
+                        break;
+
+                    case 'Proposed public purpose':
+                        return {color:'#ffffa6'};
+                        break;
+
+                    case 'Public utility':
+                        return {color:'#3366ff'};
+                        break;
+
+
+                    case 'industry':
+                        return {color:'#e680ff'};
+                        break;
+
+                    case 'Commercial':
+                        return {color:'red', fillColor:'red'};
+                        break;
+
+                    case 'Transportation':
+                        return {color:'#cccccc'};
+                        break;
+
+                    case 'transportation 2':
+                        return {color:'#cccccc'};
+                        break;
+
+                    case 'Educational':
+                        return {color:'#ebcc80'};
+                        break;
+
+                    case 'Low Density Residential':
+                        return {color:'#ebe0cc'};
+                        break;
+
+                    case 'High Density Residential':
+                        return {color:'#ccb399'};
+                        break;
+
+                    case 'Medium Density Residential':
+                        return {color:'#e6ccb3'};
+                        break;
+
+                    case 'Proposed high density residential':
+                        return {color:'#ccb399'};
+                        break;
+
+                    case 'Market':
+                        return {color:'#ffffa6'};
+                        break;
+
+                    case 'Proposed recreation':
+                        return {color:'#73b373'};
+                        break;
+
+                    case 'Proposed commercial':
+                        return {color:'red'};
+                        break;
+                }
+            }
+
+                function processLanduse (json, lyr){
+                var att = json.properties;
+                lyr.on('click', function (e){
+                    ctlSidebar.show();
+                    ctlSidebar.setContent(" <h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+    
+                });
+                      
+                
+                lyr.bindTooltip(" <h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>" );
+                }
+
+                function styleVerified(json){
+                    var att = json.properties;
+                    switch (att.Status){
+                        case 'Documented':
+                        return {color:'black', fillColor:'green'};
+                        break;
+
+                        case 'Not Document':
+                        return {color:'maroon'};
+                        break;
+
+                    }
+                }
+
+                $("input[name=fltPlots]").click(function(){
+                    arLayersIDs = [];
+                    lyrGith.refresh();
+                });
+
+
+
+
+
+            //  *********  jQuery Event Handlers  ************
+
+            $("#btnLocate").click(function(){
+                mymap.locate();
+            });
+
+            //  ***********  General Functions *********
+
+            function LatLngToArrayString(ll) {
+                return "["+ll.lat.toFixed(5)+", "+ll.lng.toFixed(5)+"]";
+            }
+
+            function returnLayerByAttribute(lyr,att,val) {
+                var arLayers = lyr.getLayers();
+                for (i=0;i<arLayers.length-1;i++) {
+                    var ftrVal = arLayers[i].feature.properties[att];
+                    if (ftrVal==val) {
+                        return arLayers[i];
+                    }
+                }
+                return false;
+            }
+
+            function testLayerAttribute(ar, val, att, fg, err, btn) {
+                if (ar.indexOf(val)<0) {
+                    $(fg).addClass("has-error");
+                    $(err).html("**** "+att+" NOT FOUND ****");
+                    $(btn).attr("disabled", true);
+                } else {
+                    $(fg).removeClass("has-error");
+                    $(err).html("");
+                    $(btn).attr("disabled", false);
+                }
+            };
+
+        </script>
+    </body>
+</html>
