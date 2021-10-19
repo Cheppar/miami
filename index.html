@@ -140,6 +140,8 @@ tr:nth-child(even) {
     
 }
 
+
+
 .searchbox
 {
     position: relative;
@@ -226,18 +228,10 @@ tr:nth-child(even) {
 
                 <div id="divPlotError" class="errorMsg col-xs-12"></div>
 
-                <!-- <div id="divFindPlot" class="form-group has-error">
-                    <div class="col-xs-8">
-                        <input type="text" id="txtFindPlot" class="form-control srchbtn"  placeholder="Parcel ID">
-                    </div>
-
-                    <div class="col-xs-4">
-                        <button id="btnFindPlot" class="btn btn-primary btn-block srchbtn" ><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>
-                </div> -->
-                 <table>
+                <table>
                      <tr id="grrr"> </tr>
                  </table>
+
 
                 <div class="" id="divPlotData"></div>
             </div>
@@ -303,7 +297,9 @@ tr:nth-child(even) {
 
                 mymap.zoomControl.setPosition('bottomright');
 
-                ctlSidebar = L.control.sidebar('side-bar',{closeButton:'true'},).addTo(mymap);
+                ctlSidebar = L.control.sidebar('side-bar',
+                    {closeButton:true,
+                    }).addTo(mymap);
 
                 // ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
                 //    ctlSidebar.toggle();
@@ -315,68 +311,6 @@ tr:nth-child(even) {
 
                
                 ctlMeasure = L.control.polylineMeasure({position:'bottomright'}).addTo(mymap);
-
-                
-                $(document).ready(function () {
-        
-        // var map = L.map('map').setView([51.505, -0.09], 5);
-        // map.zoomControl.setPosition('topright');
-        // map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        //     {attribution:'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'}
-        //     ));
-        
-        var searchboxControl=createSearchboxControl();
-        var control = new searchboxControl({
-            sidebarTitleText: 'Header',
-            // sidebarMenuItems: {
-            //     Items: [
-            //         { type: "link", name: "Link 1 (github.com)", href: "http://github.com", icon: "icon-local-carwash" },
-            //         { type: "link", name: "Link 2 (google.com)", href: "http://google.com", icon: "icon-cloudy" },
-            //         { type: "button", name: "Button 1", onclick: "alert('button 1 clicked !')", icon: "icon-potrait" },
-            //         { type: "button", name: "Button 2", onclick: "button2_click();", icon: "icon-local-dining" },
-            //         { type: "link", name: "Link 3 (stackoverflow.com)", href: 'http://stackoverflow.com', icon: "icon-bike" },
-            //     ]
-            // }
-        });
-
-        control._searchfunctionCallBack = function (searchkeywords)
-        {   
-            ctlSidebar.show();
-             function returnPlotByID(id){
-                    var arLayers = lyrLandUse.getLayers();
-                    for(i=0; i<arLayers.length-1;i++){
-                        var featureID = arLayers[i].feature.properties.OBJECTID;
-                        if(featureID == id){
-                            return arLayers[i];
-                            }
-                        }
-                    return false;
-                }
-
-                //*** find plot query ***//
-
-                $("#searchbox-searchbutton").click(function(){
-                    var id = $("#searchboxinput").val();
-                    var lyr = returnPlotByID (id);
-                    if (lyr){
-                        if(lyrSearch){
-                            lyrSearch.remove();
-                        }
-                        lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
-
-                        mymap.fitBounds(lyr.getBounds().pad(1));
-                        var att = lyr.feature.properties;
-                        $("#divPlotData").html("<h4>Parcel Information </h4><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
-                    }else{
-                        $("#divPlotError").html("***Plot Not Found ***");
-                    }
-                });
-            
-        }
-        mymap.addControl(control);
-    });
-    
-    
 
                 //   *********** Layer Initialization **********
 
@@ -416,6 +350,7 @@ tr:nth-child(even) {
                         source:arLayersIDs
                     });
                 });
+
             //<!------- setup layer control ----------->//
 
                 objBasemaps = {
@@ -492,29 +427,21 @@ tr:nth-child(even) {
                     }
                 }
 
-                function button2_click(id)
-                {
-                   var arLayers = lyrLandUse.getLayers();
-                    for(i=0; i<arLayers.length-1;i++){
-                        var featureID = arLayers[i].feature.properties.OBJECTID;
-                        if(featureID == id){
-                            return arLayers[i];
-                            }
-                        }
-                    return false; 
-                }
-
-                //**** search plot *****//
-
-                function returnPlotByID(id){
-                    var arLayers = lyrLandUse.getLayers();
-                    for(i=0; i<arLayers.length-1;i++){
-                        var featureID = arLayers[i].feature.properties.OBJECTID;
-                        if(featureID == id){
-                            return arLayers[i];
-                            }
-                        }
-                    return false;
+               $(document).ready(function () {
+                    var searchboxControl=createSearchboxControl();
+                    var control = new searchboxControl({  
+                    });
+                    control._searchfunctionCallBack = function (searchkeywords)
+                    {   
+                    function returnPlotByID(id){
+                        var arLayers = lyrLandUse.getLayers();
+                            for(i=0; i<arLayers.length-1;i++){
+                                var featureID = arLayers[i].feature.properties.OBJECTID;
+                                    if(featureID == id){
+                                        return arLayers[i];
+                                        }
+                                    }
+                            return false;
                 }
 
                 //*** find plot query ***//
@@ -522,19 +449,24 @@ tr:nth-child(even) {
                 $("#searchbox-searchbutton").click(function(){
                     var id = $("#searchboxinput").val();
                     var lyr = returnPlotByID (id);
+                    var att = lyr.feature.properties;
+                     ctlSidebar.show();
+                      
                     if (lyr){
                         if(lyrSearch){
-                            lyrSearch.remove();
+                            lyrSearch.remove();    
                         }
-                        lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
 
-                        mymap.fitBounds(lyr.getBounds().pad(1));
-                        var att = lyr.feature.properties;
-                        $("#divPlotData").html("<h4>Parcel Information </h4><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+                    ctlSidebar.setContent("<h2 class='text-center real'>Parcel Information </h2><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+                    lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+                    mymap.fitBounds(lyr.getBounds().pad(1));
                     }else{
                         $("#divPlotError").html("***Plot Not Found ***");
                     }
-                });
+                }); 
+        }
+        mymap.addControl(control);
+    });
 
 
             function processGith (json, lyr){
@@ -632,13 +564,12 @@ tr:nth-child(even) {
                 var att = json.properties;
                 lyr.on('click', function (e){
                     ctlSidebar.show();
-                    ctlSidebar.setContent(" <h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
                     if (lyr){
                         if(lyrSearch){
                             lyrSearch.remove();
                         }
                     lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
-
+                    ctlSidebar.setContent("<div class='twente'> <h4 class='text-center real' >Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table></div>");
                     mymap.fitBounds(lyr.getBounds().pad(1));
                     }
                 });
@@ -675,6 +606,14 @@ tr:nth-child(even) {
             $("#btnLocate").click(function(){
                 mymap.locate();
             });
+
+           $(document).keyup(function(e) {
+            if (e.keyCode == 27) { // escape key maps to keycode `27`
+                ctlSidebar.hide();
+                }
+            });
+
+            
 
             //  ***********  General Functions *********
 
