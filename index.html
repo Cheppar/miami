@@ -140,6 +140,24 @@ tr:nth-child(even) {
     
 }
 
+.searchbox
+{
+    position: relative;
+    background: #fff;
+    border-radius: 2px;
+    box-sizing: border-box;
+    width: 260px;
+    height: 48px;
+    border-bottom: 1px solid transparent;
+    padding: 12px 70px 11px 70px;
+    transition-property: background,box-shadow;
+    transition-duration: 0.3s;
+}
+#searchboxinput{
+    width:100%;
+    font-size: 15px;
+}
+
 /* Style the header links */
 .header title {
   float: right;
@@ -281,13 +299,11 @@ tr:nth-child(even) {
 
                 mymap.zoomControl.setPosition('bottomright');
 
-                ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
+                ctlSidebar = L.control.sidebar('side-bar',{closeButton:'true'},).addTo(mymap);
 
-                ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
-                   ctlSidebar.toggle();
-                }).setPosition('topright').addTo(mymap);
-
-               
+                // ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
+                //    ctlSidebar.toggle();
+                // }).setPosition('topright').addTo(mymap);
 
                 ctlScale = L.control.scale({position:'bottomleft', metric:false, maxWidth:200}).addTo(mymap);
 
@@ -406,10 +422,7 @@ tr:nth-child(even) {
                 };
 
                 objOverlays = {
-
                     "Land Parcel":lyrLandUse,
-                    
-
                 };
 
                 ctlLayers = L.control.layers(objBasemaps, objOverlays).addTo(mymap);
@@ -616,11 +629,18 @@ tr:nth-child(even) {
                 lyr.on('click', function (e){
                     ctlSidebar.show();
                     ctlSidebar.setContent(" <h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
-    
+                    if (lyr){
+                        if(lyrSearch){
+                            lyrSearch.remove();
+                        }
+                    lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+
+                    mymap.fitBounds(lyr.getBounds().pad(1));
+                    }
                 });
                       
                 
-                lyr.bindTooltip(" <h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>" );
+                lyr.bindTooltip("<h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>",{direction:'top'});
                 }
 
                 function styleVerified(json){
