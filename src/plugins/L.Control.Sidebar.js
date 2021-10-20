@@ -29,8 +29,7 @@ L.Control.Sidebar = L.Control.extend({
 
         // Create close button and attach it if configured
         if (this.options.closeButton) {
-            var close = this._closeButton =
-                L.DomUtil.create('a', 'close', container);
+            var close = this._closeButton = L.DomUtil.create('button', 'close', container);
             close.innerHTML = '&times;';
         }
     },
@@ -42,9 +41,11 @@ L.Control.Sidebar = L.Control.extend({
         // Attach event to close button
         if (this.options.closeButton) {
             var close = this._closeButton;
-
             L.DomEvent.on(close, 'click', this.hide, this);
+            alert('press 'ESC' key to remove highlight.');
         }
+
+
 
         L.DomEvent
             .on(container, 'transitionend',

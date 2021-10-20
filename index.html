@@ -148,7 +148,7 @@ tr:nth-child(even) {
     background: #fff;
     border-radius: 2px;
     box-sizing: border-box;
-    width: 260px;
+    width: 460px;
     height: 48px;
     border-bottom: 1px solid transparent;
     padding: 12px 70px 11px 70px;
@@ -160,7 +160,7 @@ tr:nth-child(even) {
     width:100%;
     font-size: 15px;
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
     letter-spacing: 2px;
 }
 
@@ -180,6 +180,28 @@ tr:nth-child(even) {
 .srchbtn{
     margin: 20px 2px;
 }
+
+ 
+  .leaflet-sidebar .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    color: #cc0d00;
+    font-size: 25px;
+    line-height: 0.25em;
+    text-align: center;
+    background: white;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    z-index: 1000; }
+
+.twente{
+    padding-top: 50px;
+}
+
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
@@ -228,9 +250,6 @@ tr:nth-child(even) {
 
                 <div id="divPlotError" class="errorMsg col-xs-12"></div>
 
-                <table>
-                     <tr id="grrr"> </tr>
-                 </table>
 
 
                 <div class="" id="divPlotData"></div>
@@ -297,13 +316,14 @@ tr:nth-child(even) {
 
                 mymap.zoomControl.setPosition('bottomright');
 
-                ctlSidebar = L.control.sidebar('side-bar',
-                    {closeButton:true,
-                    }).addTo(mymap);
+                ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
 
-                // ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
-                //    ctlSidebar.toggle();
-                // }).setPosition('topright').addTo(mymap);
+                ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
+                   if(ctlSidebar.close(){
+                        l
+                   });
+                   ctlSidebar.toggle();
+                }).setPosition('topright').addTo(mymap);
 
                 ctlScale = L.control.scale({position:'bottomleft', metric:false, maxWidth:200}).addTo(mymap);
 
@@ -335,14 +355,14 @@ tr:nth-child(even) {
 
                 lyrRiver = L.geoJSON.ajax('data/maimahiuriver.geojson').bindTooltip("County Boundary").addTo(mymap);
 
+
                 lyrLandUse = L.geoJSON.ajax('data/miami/miamiplots.geojson', {
                     color: '#f01154',
                     opacity: 1,
                     weight:0.8,
                     style: styleLanduse, 
-                    onEachFeature: processLanduse, 
-                    //filter: fliterPlots
-                }).addTo(mymap);
+                    onEachFeature: processLanduse
+                     }).addTo(mymap);
 
                 lyrLandUse.on('data:loaded', function(){
                     arLayersIDs.sort(function(a,b){return a-b});
@@ -432,7 +452,8 @@ tr:nth-child(even) {
                     var control = new searchboxControl({  
                     });
                     control._searchfunctionCallBack = function (searchkeywords)
-                    {   
+                    {  
+
                     function returnPlotByID(id){
                         var arLayers = lyrLandUse.getLayers();
                             for(i=0; i<arLayers.length-1;i++){
@@ -449,16 +470,15 @@ tr:nth-child(even) {
                 $("#searchbox-searchbutton").click(function(){
                     var id = $("#searchboxinput").val();
                     var lyr = returnPlotByID (id);
-                    var att = lyr.feature.properties;
-                     ctlSidebar.show();
-                      
+                    var att = lyr.feature.properties; 
                     if (lyr){
                         if(lyrSearch){
                             lyrSearch.remove();    
                         }
-
+                    ctlSidebar.show();
                     ctlSidebar.setContent("<h2 class='text-center real'>Parcel Information </h2><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
-                    lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+
+                     lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
                     mymap.fitBounds(lyr.getBounds().pad(1));
                     }else{
                         $("#divPlotError").html("***Plot Not Found ***");
@@ -560,7 +580,10 @@ tr:nth-child(even) {
                 }
             }
 
-                function processLanduse (json, lyr){
+
+
+        
+       function processLanduse (json, lyr){
                 var att = json.properties;
                 lyr.on('click', function (e){
                     ctlSidebar.show();
@@ -573,10 +596,12 @@ tr:nth-child(even) {
                     mymap.fitBounds(lyr.getBounds().pad(1));
                     }
                 });
-                      
-                
-                lyr.bindTooltip("<h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>",{direction:'top'});
+                    lyr.bindTooltip("<h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>",{direction:'top', opacity: 0.8});
                 }
+
+
+                   
+
 
                 function styleVerified(json){
                     var att = json.properties;
@@ -607,13 +632,19 @@ tr:nth-child(even) {
                 mymap.locate();
             });
 
+
+
+            $('.closeButton').click(function(e){ 
+                lyrSearch.clearLayers();
+            });
+
            $(document).keyup(function(e) {
             if (e.keyCode == 27) { // escape key maps to keycode `27`
                 ctlSidebar.hide();
+                 lyrSearch.clearLayers();
                 }
             });
 
-            
 
             //  ***********  General Functions *********
 

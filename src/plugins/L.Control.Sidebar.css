@@ -79,13 +79,14 @@
         left: 460px; }
       .leaflet-sidebar.right.visible ~ .leaflet-right {
         right: 460px; } }
+  /*
   .leaflet-sidebar .close {
     position: absolute;
     right: 20px;
     top: 20px;
-    width: 31px;
-    height: 31px;
-    color: #333;
+    width: 51px;
+    height: 51px;
+    color: #cc0d00;
     font-size: 25px;
     line-height: 1em;
     text-align: center;
@@ -93,7 +94,7 @@
     -webkit-border-radius: 16px;
     border-radius: 16px;
     cursor: pointer;
-    z-index: 800; }
+    z-index: 1000; }*/
 
 .leaflet-left {
   transition: left 0.5s; }
