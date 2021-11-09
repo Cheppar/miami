@@ -133,11 +133,8 @@ th, td {
 }
 
 tr:nth-child(even) {
-    background-color: #f6ffa3;
-    
+    background-color: #f6ffa3;  
 }
-
-
 
 .searchbox
 {
@@ -217,29 +214,19 @@ tr:nth-child(even) {
     </head>
     <body>
         <div id="side-bar" class="col-md-2">
-
             <div id="divPlot" class="col-xs-12">
                 <div id="divPlotLabel" class=" col-xs-12">
                     <!--<h4 id="lblPlot">Land Parcel Search</h4>-->
                 </div>
-
                 <div id="divPlotError" class="errorMsg col-xs-12"></div>
-
                 <table>
                      <tr id="grrr"> </tr>
                  </table>
-
-
                 <div class="" id="divPlotData"></div>
             </div>
-
             <div id="divPlotFilter" class="col-xs-12"> 
             </div>
         </div>
-
-        
-
-
         <div id="mapdiv" class="col-md-12"></div>
         <script>
             var mymap;
@@ -301,10 +288,7 @@ tr:nth-child(even) {
                 // }).setPosition('topright').addTo(mymap);
 
                 ctlScale = L.control.scale({position:'bottomleft', metric:false, maxWidth:200}).addTo(mymap);
-
                 ctlMouseposition = L.control.mousePosition().addTo(mymap);
-
-               
                 ctlMeasure = L.control.polylineMeasure({position:'bottomright'}).addTo(mymap);
 
                 //   *********** Layer Initialization **********
