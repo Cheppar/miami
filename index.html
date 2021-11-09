@@ -175,6 +175,28 @@ tr:nth-child(even) {
     margin: 20px 2px;
 }
 
+ 
+  .leaflet-sidebar .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 30px;
+    height: 30px;
+    color: #cc0d00;
+    font-size: 25px;
+    line-height: 0.25em;
+    text-align: center;
+    background: white;
+    -webkit-border-radius: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    z-index: 1000; }
+
+.twente{
+    padding-top: 50px;
+}
+
+
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
   font-size: 25px;
@@ -219,9 +241,15 @@ tr:nth-child(even) {
                     <!--<h4 id="lblPlot">Land Parcel Search</h4>-->
                 </div>
                 <div id="divPlotError" class="errorMsg col-xs-12"></div>
+<<<<<<< HEAD
                 <table>
                      <tr id="grrr"> </tr>
                  </table>
+=======
+
+
+
+>>>>>>> 3049e9aef2f10edc858ba2b225b2d768c846d5ac
                 <div class="" id="divPlotData"></div>
             </div>
             <div id="divPlotFilter" class="col-xs-12"> 
@@ -283,9 +311,12 @@ tr:nth-child(even) {
 
                 ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
 
-                // ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
-                //    ctlSidebar.toggle();
-                // }).setPosition('topright').addTo(mymap);
+                ctlEasybutton = L.easyButton('glyphicon-transfer',function(){
+                   if(ctlSidebar.close(){
+                        l
+                   });
+                   ctlSidebar.toggle();
+                }).setPosition('topright').addTo(mymap);
 
                 ctlScale = L.control.scale({position:'bottomleft', metric:false, maxWidth:200}).addTo(mymap);
                 ctlMouseposition = L.control.mousePosition().addTo(mymap);
@@ -314,14 +345,14 @@ tr:nth-child(even) {
 
                 lyrRiver = L.geoJSON.ajax('data/maimahiuriver.geojson').bindTooltip("County Boundary").addTo(mymap);
 
+
                 lyrLandUse = L.geoJSON.ajax('data/miami/miamiplots.geojson', {
                     color: 'black',
                     // opacity: 1,
                      weight:1,
                     style: styleLanduse, 
-                    onEachFeature: processLanduse, 
-                    //filter: fliterPlots
-                }).addTo(mymap);
+                    onEachFeature: processLanduse
+                     }).addTo(mymap);
 
                 lyrLandUse.on('data:loaded', function(){
                     arLayersIDs.sort(function(a,b){return a-b});
@@ -411,7 +442,8 @@ tr:nth-child(even) {
                     var control = new searchboxControl({  
                     });
                     control._searchfunctionCallBack = function (searchkeywords)
-                    {   
+                    {  
+
                     function returnPlotByID(id){
                         var arLayers = lyrLandUse.getLayers();
                             for(i=0; i<arLayers.length-1;i++){
@@ -428,19 +460,22 @@ tr:nth-child(even) {
                 $("#searchbox-searchbutton").click(function(){
                     var id = $("#searchboxinput").val();
                     var lyr = returnPlotByID (id);
-                    var att = lyr.feature.properties;
-                     ctlSidebar.show();
-                      
+                    var att = lyr.feature.properties; 
                     if (lyr){
                         if(lyrSearch){
                             lyrSearch.remove();    
                         }
-
+                    ctlSidebar.show();
                     ctlSidebar.setContent("<h2 class='text-center real'>Parcel Information </h2><table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr> <tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>");
+
                     lyrSearch = L.geoJSON(lyr.toGeoJSON(),
                     {style:{color:'green',
                      weight:10, 
                      opacity:0.5}}).addTo(mymap);
+
+
+                     lyrSearch = L.geoJSON(lyr.toGeoJSON(),{style:{color:'blue', weight:10, opacity:0.5}}).addTo(mymap);
+
                     mymap.fitBounds(lyr.getBounds().pad(1));
                     }else{
                         $("#divPlotError").html("***Plot Not Found ***");
@@ -542,7 +577,10 @@ tr:nth-child(even) {
                 }
             }
 
-                function processLanduse (json, lyr){
+
+
+        
+       function processLanduse (json, lyr){
                 var att = json.properties;
                 lyr.on('click', function (e){
                     ctlSidebar.show();
@@ -557,6 +595,7 @@ tr:nth-child(even) {
                     }
 
                 });
+<<<<<<< HEAD
 
                 lyr.on({
                         mouseover: highlightDot,
@@ -606,6 +645,14 @@ tr:nth-child(even) {
                     
                 // }
                                  
+=======
+                    lyr.bindTooltip("<h4 class='text-center real'>Parcel Information</h4> <table><tr> <td><h6> Parcel</h6><td> <td>"+att.OBJECTID+"<td></tr><tr><td><h6>Land Use</h6><td> <td>"+att.LU+"<td></tr> <tr><td><h6>Plinth Area</h6><td> <td>"+att.Shape__Are+"<td></tr></table>",{direction:'top', opacity: 0.8});
+                }
+>>>>>>> 3049e9aef2f10edc858ba2b225b2d768c846d5ac
+
+
+                   
+
 
                 function styleVerified(json){
                     var att = json.properties;
@@ -636,13 +683,19 @@ tr:nth-child(even) {
                 mymap.locate();
             });
 
+
+
+            $('.closeButton').click(function(e){ 
+                lyrSearch.clearLayers();
+            });
+
            $(document).keyup(function(e) {
             if (e.keyCode == 27) { // escape key maps to keycode `27`
                 ctlSidebar.hide();
+                 lyrSearch.clearLayers();
                 }
             });
 
-            
 
             //  ***********  General Functions *********
 
